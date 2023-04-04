@@ -23,6 +23,7 @@
         <org.mapstruct.version>1.5.3.Final</org.mapstruct.version>
         <org.springdoc.version>2.1.0</org.springdoc.version>
         <org.modelmapper.version>2.4.4</org.modelmapper.version>
+        <org.projectlombok.version>1.18.26</org.projectlombok.version>
     </properties>
     <dependencies>
         <!-- Spring Boot Dependencies -->
@@ -42,7 +43,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.26</version>
+            <version>${org.projectlombok.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
