@@ -63,7 +63,7 @@ public class AccountService {
      */
     public AccountResponseDTO updateAccount(AccountDTO accountDTO) {
         Account accountFromDTO = accountMapper.toEntity(accountDTO);
-        AccountResponseDTO accountResponseDTO = accountRepository.findById(accountFromDTO.getId())
+        return accountRepository.findById(accountFromDTO.getId())
                 .map(account -> {
                     Account updatedAccount = accountMapper.toEntity(accountDTO);
                     updatedAccount.setId(account.getId());
@@ -71,7 +71,6 @@ public class AccountService {
                     return accountMapper.toDTO(savedAccount);
                 })
                 .orElse(null);
-        return accountResponseDTO;
     }
 
 }

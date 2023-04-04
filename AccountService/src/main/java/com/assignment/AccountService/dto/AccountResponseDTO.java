@@ -42,7 +42,7 @@ public class AccountResponseDTO {
     public boolean equals(Object obj) {
         if (obj == this) return true;
         if (!(obj instanceof AccountResponseDTO)) return false;
-        AccountResponseDTO other = (AccountResponseDTO) obj;
+        var other = (AccountResponseDTO) obj;
         return Objects.equals(id, other.id) &&
                 Objects.equals(customerId, other.customerId) &&
                 Objects.equals(balance, other.balance);
