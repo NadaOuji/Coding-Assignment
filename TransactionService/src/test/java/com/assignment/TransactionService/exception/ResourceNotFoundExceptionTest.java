@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.web.context.request.ServletWebRequest;
 
+import java.util.Objects;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
@@ -25,6 +27,6 @@ public class ResourceNotFoundExceptionTest {
         ResponseEntity<ApiError> responseEntity = exceptionHandler.handleResourceNotFoundException(ex, webRequest);
 
         assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
-        assertEquals("Resource not found", responseEntity.getBody().getMessage());
+        assertEquals("Resource not found", Objects.requireNonNull(responseEntity.getBody()).getMessage());
     }
 }

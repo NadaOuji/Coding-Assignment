@@ -17,6 +17,7 @@ import org.springframework.web.context.request.WebRequest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
@@ -47,7 +48,7 @@ public class CustomExceptionHandlerTest {
 
         // Then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-        assertThat(responseEntity.getBody().getMessage()).isEqualTo("Transaction not found");
+        assertThat(Objects.requireNonNull(responseEntity.getBody()).getMessage()).isEqualTo("Transaction not found");
     }
 
     @Test
@@ -67,7 +68,7 @@ public class CustomExceptionHandlerTest {
 
         // Then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-        assertThat(responseEntity.getBody().getMessage()).isEqualTo("Validation errors");
+        assertThat(Objects.requireNonNull(responseEntity.getBody()).getMessage()).isEqualTo("Validation errors");
         assertThat(responseEntity.getBody().getErrors()).containsExactly("Validation failed for field 'id' with value 'null': ID cannot be null");
     }
 
@@ -82,6 +83,6 @@ public class CustomExceptionHandlerTest {
 
         // Then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
-        assertThat(responseEntity.getBody().getMessage()).isEqualTo("An error occurred");
+        assertThat(Objects.requireNonNull(responseEntity.getBody()).getMessage()).isEqualTo("An error occurred");
     }
 }
