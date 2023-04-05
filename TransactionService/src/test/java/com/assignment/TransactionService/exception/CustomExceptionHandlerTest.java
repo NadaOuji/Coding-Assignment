@@ -1,4 +1,4 @@
-package com.assignment.AccountService.exception;
+package com.assignment.TransactionService.exception;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
@@ -40,7 +40,7 @@ public class CustomExceptionHandlerTest {
     @DisplayName("Should handle ResourceNotFoundException and return 404 with error message")
     public void handleResourceNotFoundException_ReturnsApiErrorWithNotFoundStatusAndMessage() {
         // Given
-        ResourceNotFoundException ex = new ResourceNotFoundException("Account not found");
+        ResourceNotFoundException ex = new ResourceNotFoundException("Transaction not found");
         WebRequest request = mock(WebRequest.class);
 
         // When
@@ -48,14 +48,14 @@ public class CustomExceptionHandlerTest {
 
         // Then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-        assertThat(Objects.requireNonNull(responseEntity.getBody()).getMessage()).isEqualTo("Account not found");
+        assertThat(Objects.requireNonNull(responseEntity.getBody()).getMessage()).isEqualTo("Transaction not found");
     }
 
     @Test
     @DisplayName("Should handle MethodArgumentNotValidException and return 400 with validation errors")
     public void handleMethodArgumentNotValidException_ReturnsApiErrorWithBadRequestStatusAndValidationErrors() {
         // Given
-        FieldError fieldError = new FieldError("accountDTO", "id", "ID cannot be null");
+        FieldError fieldError = new FieldError("TransactionDTO", "id", "ID cannot be null");
         List<FieldError> fieldErrors = new ArrayList<>();
         fieldErrors.add(fieldError);
 
