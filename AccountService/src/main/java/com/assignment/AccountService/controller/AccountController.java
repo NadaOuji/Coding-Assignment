@@ -26,6 +26,11 @@ public class AccountController {
     private final AccountService accountService;
     private final AccountMapper accountMapper;
 
+    /**
+     * Constructs a new AccountController with the specified accountService.
+     *
+     * @param accountService The accountService to use.
+     */
     @Autowired
     public AccountController(AccountService accountService, AccountMapper accountMapper) {
         this.accountService = accountService;

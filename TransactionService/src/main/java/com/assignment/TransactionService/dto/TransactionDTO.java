@@ -1,42 +1,29 @@
-package com.assignment.TransactionService.model;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+package com.assignment.TransactionService.dto;
 
 import java.time.LocalDateTime;
 
-@Entity
-public class Transaction {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class TransactionDTO {
     private Long id;
-
     private Long accountId;
-
     private Double amount;
-
     private String description;
-
     private LocalDateTime date;
 
-    public Transaction() {}
-
-    public Transaction(Long id, Long accountId, Double amount, String description, LocalDateTime date) {
+    public TransactionDTO(Long id, Long accountId, Double amount, String description, LocalDateTime date) {
         this.id = id;
         this.accountId = accountId;
         this.amount = amount;
         this.description = description;
         this.date = date;
     }
-
-    public Transaction(Long accountId, Double amount, String description, LocalDateTime date) {
+    public TransactionDTO(Long accountId, Double amount, String description, LocalDateTime date) {
         this.accountId = accountId;
         this.amount = amount;
         this.description = description;
         this.date = date;
+    }
+    public TransactionDTO() {
+        // default constructor
     }
 
     public Long getId() {
