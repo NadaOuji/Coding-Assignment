@@ -66,7 +66,7 @@ public class TransactionControllerTest {
         assertEquals(response.getStatus(), HttpStatus.OK.value());
 
         String contentAsString = response.getContentAsString();
-        List<TransactionResponseDTO> responseDTOs = objectMapper.readValue(contentAsString, new TypeReference<List<TransactionResponseDTO>>() {
+        List<TransactionResponseDTO> responseDTOs = objectMapper.readValue(contentAsString, new TypeReference<>() {
         });
         assertEquals(responseDTOs.size(), 2);
     }
