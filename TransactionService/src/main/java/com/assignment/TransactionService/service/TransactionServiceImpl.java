@@ -1,6 +1,6 @@
 package com.assignment.TransactionService.service;
 
-import com.assignment.AccountService.exception.TransactionNotFoundException;
+import com.assignment.TransactionService.exception.TransactionNotFoundException;
 import com.assignment.TransactionService.dto.TransactionDTO;
 import com.assignment.TransactionService.dto.TransactionResponseDTO;
 import com.assignment.TransactionService.mapper.TransactionMapper;
