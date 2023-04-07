@@ -1,4 +1,4 @@
-package com.assignment.AccountService.exception;
+package com.assignment.TransactionService.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

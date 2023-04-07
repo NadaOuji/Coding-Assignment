@@ -3,8 +3,10 @@ package com.assignment.AccountService.mapper;
 import com.assignment.AccountService.dto.AccountDTO;
 import com.assignment.AccountService.dto.AccountResponseDTO;
 import com.assignment.AccountService.model.Account;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mapstruct.factory.Mappers;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
@@ -16,17 +18,29 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 public class AccountMapperTest {
 
-    private final AccountMapper mapper = Mappers.getMapper(AccountMapper.class);
+    @Autowired
+    private AccountMapper accountMapper;
 
-    @Test
-    public void testToEntity() {
-        // given
-        AccountDTO accountDTO = new AccountDTO();
+    private AccountDTO accountDTO;
+    private Account account;
+    private List<Account> accounts;
+
+    @BeforeEach
+    public void setUp() {
+        accountDTO = new AccountDTO();
         accountDTO.setCustomerId(1L);
         accountDTO.setBalance(new BigDecimal("100.00"));
+        account = createAccount(1L, 1L, new BigDecimal("100.00"));
+        accounts = new ArrayList<>();
+        accounts.add(createAccount(1L, 1L, new BigDecimal("100.00")));
+        accounts.add(createAccount(2L, 2L, new BigDecimal("200.00")));
+    }
 
+    @Test
+    @DisplayName("Test mapping from AccountDTO to Account entity")
+    public void testToEntity() {
         // when
-        Account account = mapper.toEntity(accountDTO);
+        Account account = accountMapper.toEntity(accountDTO);
 
         // then
         assertEquals(accountDTO.getCustomerId(), account.getCustomerId());
@@ -34,15 +48,10 @@ public class AccountMapperTest {
     }
 
     @Test
+    @DisplayName("Test mapping from Account entity to AccountResponseDTO")
     public void testToDTO() {
-        // given
-        Account account = new Account();
-        account.setId(1L);
-        account.setCustomerId(1L);
-        account.setBalance(new BigDecimal("100.00"));
-
         // when
-        AccountResponseDTO accountResponseDTO = mapper.toDTO(account);
+        AccountResponseDTO accountResponseDTO = accountMapper.toDTO(account);
 
         // then
         assertEquals(account.getId(), accountResponseDTO.getId());
@@ -51,23 +60,10 @@ public class AccountMapperTest {
     }
 
     @Test
+    @DisplayName("Test mapping from List<Account> to List<AccountResponseDTO>")
     public void testToAccountsDTO() {
-        // given
-        List<Account> accounts = new ArrayList<>();
-        Account account1 = new Account();
-        account1.setId(1L);
-        account1.setCustomerId(1L);
-        account1.setBalance(new BigDecimal("100.00"));
-        accounts.add(account1);
-
-        Account account2 = new Account();
-        account2.setId(2L);
-        account2.setCustomerId(2L);
-        account2.setBalance(new BigDecimal("200.00"));
-        accounts.add(account2);
-
         // when
-        List<AccountResponseDTO> accountResponseDTOList = mapper.toAccountsDTO(accounts);
+        List<AccountResponseDTO> accountResponseDTOList = accountMapper.toAccountsDTO(accounts);
 
         // then
         assertEquals(accounts.size(), accountResponseDTOList.size());
@@ -78,6 +74,14 @@ public class AccountMapperTest {
         assertEquals(accounts.get(1).getId(), accountResponseDTOList.get(1).getId());
         assertEquals(accounts.get(1).getCustomerId(), accountResponseDTOList.get(1).getCustomerId());
         assertEquals(accounts.get(1).getBalance(), accountResponseDTOList.get(1).getBalance());
+    }
+
+    private Account createAccount(Long id, Long customerId, BigDecimal balance) {
+        Account account = new Account();
+        account.setId(id);
+        account.setCustomerId(customerId);
+        account.setBalance(balance);
+        return account;
     }
 
 }
