@@ -40,7 +40,7 @@ public class AccountService {
      */
     public List<AccountResponseDTO> getAllAccounts() {
         List<Account> accounts = accountRepository.findAll();
-        return accounts.stream().map(accountMapper::toDTO).collect(Collectors.toList());
+        return accountMapper.toAccountsDTO(accounts);
     }
 
     /**

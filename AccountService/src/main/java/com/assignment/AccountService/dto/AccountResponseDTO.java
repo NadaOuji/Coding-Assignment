@@ -41,8 +41,7 @@ public class AccountResponseDTO {
     @Override
     public boolean equals(Object obj) {
         if (obj == this) return true;
-        if (!(obj instanceof AccountResponseDTO)) return false;
-        var other = (AccountResponseDTO) obj;
+        if (!(obj instanceof AccountResponseDTO other)) return false;
         return Objects.equals(id, other.id) &&
                 Objects.equals(customerId, other.customerId) &&
                 Objects.equals(balance, other.balance);
