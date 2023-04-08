@@ -24,6 +24,7 @@
         <org.springdoc.version>2.1.0</org.springdoc.version>
         <org.modelmapper.version>2.4.4</org.modelmapper.version>
         <org.projectlombok.version>1.18.26</org.projectlombok.version>
+        <org.testng.version>7.7.1</org.testng.version>
     </properties>
     <dependencies>
         <!-- Spring Boot Dependencies -->
@@ -83,13 +84,17 @@
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>RELEASE</version>
+            <version>${org.testng.version}</version>
             <scope>compile</scope>
         </dependency>
         <!-- Spring Cloud Dependencies -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-config</artifactId>
         </dependency>
     </dependencies>
     <dependencyManagement>
