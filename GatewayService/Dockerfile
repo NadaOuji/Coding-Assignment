@@ -6,7 +6,7 @@ ARG JAR_FILE=target/*.jar
 
 COPY ${JAR_FILE} app.jar
 
-COPY application.properties /app/
+COPY src/main/resources/application.properties /app/
 
 ENV SPRING_CLOUD_CONFIG_URI http://config-server:8888
 ENV SPRING_PROFILES_ACTIVE dev
