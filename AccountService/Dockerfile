@@ -1,14 +1,25 @@
 FROM openjdk:17-jdk-alpine
 
-VOLUME /tmp
+# Set working directory
+WORKDIR /app
 
-ARG JAR_FILE=target/*.jar
+# Copy jar and SSL script to container
+COPY target/*.jar app.jar
+COPY src/main/resources/ssl/generate-ssl-cert.sh generate-ssl-cert.sh
+COPY src/main/resources/ssl/account-service-keystore.p12 account-service-keystore.p12
 
-COPY ${JAR_FILE} app.jar
+# Install necessary packages
+RUN apk add --no-cache bash
 
-COPY src/main/resources/application.properties /app/
+# Generate SSL certificate
+RUN chmod +x generate-ssl-cert.sh && ./generate-ssl-cert.sh
 
+# Copy application.properties to container
+COPY src/main/resources/application-dockerFile.properties .
+
+# Set environment variables
 ENV SPRING_CLOUD_CONFIG_URI http://config-server:8888
 ENV SPRING_PROFILES_ACTIVE dev
 
-ENTRYPOINT ["java","-Dspring.config.location=/app/application.properties","-jar","/app.jar"]
+# Set entrypoint
+ENTRYPOINT ["java","-Dspring.config.location=./application-dockerFile.properties","-jar","/app/app.jar"]
