@@ -6,6 +6,10 @@ ARG JAR_FILE=target/*.jar
 
 COPY ${JAR_FILE} app.jar
 
+# Copy application.properties to container
+COPY src/main/resources/application-dockerFile.properties .
+
 ENV SPRING_PROFILES_ACTIVE native
 
-ENTRYPOINT ["java","-jar","/app.jar"]
+# Set entrypoint
+ENTRYPOINT ["java","-Dspring.config.location=./application-dockerFile.properties","-jar","/app.jar"]
