@@ -6,6 +6,8 @@ import com.assignment.CustomerService.exception.ResourceNotFoundException;
 import com.assignment.CustomerService.mapper.CustomerMapper;
 import com.assignment.CustomerService.model.Customer;
 import com.assignment.CustomerService.service.CustomerService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +28,9 @@ public class CustomerController {
     private final CustomerService customerService;
     private final CustomerMapper customerMapper;
 
+    private final Logger logger = LoggerFactory.getLogger(CustomerController.class);
+
+
     @Autowired
     public CustomerController(CustomerService customerService,CustomerMapper customerMapper) {
         this.customerService = customerService;
@@ -42,8 +47,11 @@ public class CustomerController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public CustomerResponseDTO createCustomer(@Validated @RequestBody CustomerDTO customerDTO) {
+        logger.info("Creating a new customer with data {}", customerDTO);
         Customer customer = customerService.createCustomer(customerDTO);
-        return customerMapper.toDTO(customer);
+        CustomerResponseDTO customerResponseDTO = customerMapper.toDTO(customer);
+        logger.info("Created a new customer with data {}", customerResponseDTO);
+        return customerResponseDTO;
     }
 
     /**
@@ -55,9 +63,15 @@ public class CustomerController {
      */
     @GetMapping("/{id}")
     public ResponseEntity<CustomerResponseDTO> getCustomerById(@PathVariable Long id) {
+        logger.info("Retrieving customer with id {}", id);
         Optional<CustomerResponseDTO> customerOpt = Optional.ofNullable(customerService.getCustomerById(id));
-        CustomerResponseDTO customer = customerOpt.orElseThrow(() -> new ResourceNotFoundException("Customer not found with id " + id));
+        CustomerResponseDTO customer = customerOpt.orElseThrow(() -> {
+            logger.error("Could not find customer with id {}", id);
+            return new ResourceNotFoundException("Customer not found with id " + id);
+        });
+        logger.info("Retrieved customer with data {}", customer);
         return ResponseEntity.ok(customer);
+
 
     }
 
@@ -68,7 +82,10 @@ public class CustomerController {
      */
     @GetMapping
     public List<CustomerResponseDTO> getAllCustomers() {
-        return customerService.getAllCustomers();
+        logger.info("Retrieving all customers");
+        List<CustomerResponseDTO> customers = customerService.getAllCustomers();
+        logger.info("Retrieved {} customers", customers.size());
+        return customers;
     }
 
 }
