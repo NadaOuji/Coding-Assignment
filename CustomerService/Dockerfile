@@ -18,7 +18,7 @@ RUN chmod +x generate-ssl-cert.sh && ./generate-ssl-cert.sh
 COPY src/main/resources/application-dockerFile.properties .
 
 # Set environment variables
-ENV SPRING_CLOUD_CONFIG_URI http://config-server:8888
+ENV SPRING_CLOUD_CONFIG_URI https://config-server:8888
 ENV SPRING_PROFILES_ACTIVE dev
 
 # Set entrypoint

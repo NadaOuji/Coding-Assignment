@@ -66,7 +66,7 @@ services:
       - "8082:8082"
     environment:
       SPRING_PROFILES_ACTIVE: dev
-      SPRING_CLOUD_CONFIG_URI: http://config-server:8888
+      SPRING_CLOUD_CONFIG_URI: https://config-server:8888
     depends_on:
       - discovery-server
     volumes:
@@ -83,7 +83,7 @@ services:
       - "8083:8083"
     environment:
       SPRING_PROFILES_ACTIVE: dev
-      SPRING_CLOUD_CONFIG_URI: http://config-server:8888
+      SPRING_CLOUD_CONFIG_URI: https://config-server:8888
     depends_on:
       - discovery-server
     volumes:
