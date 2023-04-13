@@ -1,6 +1,8 @@
 package com.assignment.AccountService.exception;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -20,6 +22,8 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 public class CustomExceptionHandler {
 
+    private static final Logger logger = LoggerFactory.getLogger(CustomExceptionHandler.class);
+
     /**
      * Handles the ResourceNotFoundException exception.
      *
@@ -30,6 +34,7 @@ public class CustomExceptionHandler {
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ApiError> handleResourceNotFoundException(ResourceNotFoundException ex, WebRequest request) {
         ApiError apiError = new ApiError(HttpStatus.NOT_FOUND, ex.getMessage());
+        logger.error("Resource not found", ex);
         return createResponseEntity(HttpStatus.NOT_FOUND, apiError);
     }
 
@@ -55,6 +60,7 @@ public class CustomExceptionHandler {
      */
     @RequestMapping("/error")
     public ResponseEntity<ApiError> handleError(HttpServletRequest request) {
+        logger.error("An error occurred while processing the request. Request URL: {}", request.getRequestURL());
         ApiError apiError = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "An error occurred");
         return createResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, apiError);
     }
